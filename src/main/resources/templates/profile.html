@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<h2>Welcome to <span th:text="${user.username}"/>'s profile ....</h2>
+
+<form th:if="${isAllowedToEdit == true}" th:action="'/profiles/'+${user.id}+'?_method=PUT'" method="POST">
+    <p>Update your profile</p>
+    <label for="username">User name</label>
+    <input id="username" name="username" type="text" th:value="${user.username}">
+    <input type="submit" value="update">
+</form>
+
+<form th:action="'/profiles/'+${user.id}+'?_method=DELETE'" method="POST">
+    <input type="submit" value="delete">
+</form>
+
+
+</body>
+</html>
