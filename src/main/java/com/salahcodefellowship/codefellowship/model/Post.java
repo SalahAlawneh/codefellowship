@@ -12,15 +12,15 @@ public class Post {
     private String body;
     private String createdAt;
     @ManyToOne
-    DBUser dbUser;
+    ApplicationUser writer;
 
     public Post() {
     }
 
-    public Post(String body, String createdAt, DBUser dbUser) {
+    public Post(String body, String createdAt, ApplicationUser writer) {
         this.body = body;
         this.createdAt = createdAt;
-        this.dbUser = dbUser;
+        this.writer = writer;
     }
 
     public Post(String body, String createdAt) {
@@ -31,6 +31,7 @@ public class Post {
     public int getId() {
         return id;
     }
+
 
     public String getBody() {
         return body;
@@ -46,5 +47,13 @@ public class Post {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public ApplicationUser getWriter() {
+        return writer;
+    }
+
+    public void setWriter(ApplicationUser writer) {
+        this.writer = writer;
     }
 }
