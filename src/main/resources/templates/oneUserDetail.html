@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <h1>Welcome to [[${wanteduser.firstName}]] [[${wanteduser.lastName}]]'s profile</h1>
+    <p>About Me: [[${wanteduser.bio}]]</p>
+    <h2>Your Posts</h2>
+    <ul th:each="post : ${wanteduser.posts}">
+        <li  th:text="${post.body}"></li>
+    </ul>
+
+<!--Hello <h1 th:text="${wanteduser.username}"></h1>-->
+<!--firstName: <h2 th:text="${wanteduser.firstName}"></h2>-->
+<!--lastName: <h2 th:text="${wanteduser.lastName}"></h2>-->
+<!--dateOfBirth: <h2 th:text="${wanteduser.dateOfBirth}"></h2>-->
+<!--bio: <h2 th:text="${wanteduser.bio}"></h2>-->
+</body>
+</html>
