@@ -83,41 +83,46 @@ public class ApplicationUser implements UserDetails {
         this.posts = posts;
     }
 
-    public Set<ApplicationUser> getFollowing() {
-        return following;
-    }
-
-    public void setFollowing(Set<ApplicationUser> following) {
-        this.following = following;
-    }
-
-    public Set<ApplicationUser> getFollower() {
-        return follower;
-    }
-
-    public void setFollower(Set<ApplicationUser> follower) {
-        this.follower = follower;
-    }
 
     @ManyToMany
     @JoinTable(
-            name = "following_followers",
-            joinColumns = {@JoinColumn(name = "follower")},
-            inverseJoinColumns = {@JoinColumn(name = "following")}
+            name="posters_and_followers",
+            joinColumns = { @JoinColumn(name="follower") },
+            inverseJoinColumns = { @JoinColumn(name = "poster")}
     )
-    Set<ApplicationUser> following;
+    Set<ApplicationUser> usersIFollow;
+
+    @ManyToMany(mappedBy = "usersIFollow")
+    Set<ApplicationUser> usersFollowingMe;
 
 
-    @ManyToMany(mappedBy = "following")
-    Set<ApplicationUser> follower;
+    public Set<ApplicationUser> getUsersIFollow() {
+        return usersIFollow;
+    }
+
+    public void setUsersIFollow(Set<ApplicationUser> usersIFollow) {
+        this.usersIFollow = usersIFollow;
+    }
+
+    public Set<ApplicationUser> getUsersFollowingMe() {
+        return usersFollowingMe;
+    }
+
+    public void setUsersFollowingMe(Set<ApplicationUser> usersFollowingMe) {
+        this.usersFollowingMe = usersFollowingMe;
+    }
 
     public ApplicationUser() {
 
     }
 
+    public void follow(ApplicationUser target) {
+        usersIFollow.add(target);
+    }
 
 
-    public ApplicationUser(String password, String username, String firstName, String lastName, String dateOfBirth, String bio, boolean isAdmin, List<Post> posts, Set<ApplicationUser> following, Set<ApplicationUser> follower) {
+
+    public ApplicationUser(String password, String username, String firstName, String lastName, String dateOfBirth, String bio, boolean isAdmin, List<Post> posts) {
         this.password = password;
         this.username = username;
         this.firstName = firstName;
@@ -126,8 +131,7 @@ public class ApplicationUser implements UserDetails {
         this.bio = bio;
         this.isAdmin = isAdmin;
         this.posts = posts;
-        this.following = following;
-        this.follower = follower;
+
     }
 
     @Override

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Welcome <span th:text="${yourName}"/></h2>
+<div th:each="oneuser:${IFollow}">
+    <h1 th:text="${oneuser.username}"></h1>
+    <a th:href="${'/user/' + oneuser.id}">Go to user page</a>
+    <div th:each="post:${oneuser.posts}">
+        <p th:text="${post.createdAt}"></p>
+        <p th:text="${post.body}"></p>
+    </div>
+    <p></p>
+</div>
+
+</body>
+</html>

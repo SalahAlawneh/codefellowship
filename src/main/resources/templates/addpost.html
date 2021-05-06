@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<h2>Welcome <span th:text="${yourName}"/></h2>
 <form action="/addpost" method="post">
     <input name="body" type="text" placeholder="add post">
     <button type="submit">Add Post</button>

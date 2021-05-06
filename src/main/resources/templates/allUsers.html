@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Welcome <span th:text="${yourName}"/></h2>
+<ul th:each="user:${users}">
+  <li th:text="${user.username}">
+  </li>
+    <form method="post" action="/follow">
+        <input type="hidden" name="follow" th:value="${user.id}" >
+        <input type="submit" value="follow">
+    </form>
+
+</ul>
+</body>
+</html>

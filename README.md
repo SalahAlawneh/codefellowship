@@ -11,3 +11,8 @@
 - "/addpost" => after ligin in you have the abitly to add a post here and after that we will take you to your profile
 - "/myprofile" => here you will see your name in the page and we render for you all of your posts
 - "/user/{id}" => here we will render for you the details of your profile, you first and last name, and your bio and after that your posts.
+- "/allusers" => we will show you all of the users have accounts in our site
+- "/follow" => you can in all users page click on follow button to go to this route, and you will follow the user you choo throw this route
+- "/feeds" => in this route you will go to page rendering for you every post that users you follow have.
+## after sign in we will say welcome to you every time
+## the is test to make sure that our web site working well
