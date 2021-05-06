@@ -4,6 +4,7 @@ import com.salahcodefellowship.codefellowship.model.ApplicationUser;
 import com.salahcodefellowship.codefellowship.model.Post;
 import com.salahcodefellowship.codefellowship.repository.ApplicationUserRepository;
 import com.salahcodefellowship.codefellowship.repository.PostRepository;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -78,8 +79,10 @@ public class GeneralController {
     }
 
     @GetMapping("/addpost")
-    public String renderAddPostPage() {
-
+    public String renderAddPostPage(Principal principal, Model model) {
+        if (principal != null) {
+            model.addAttribute("yourName", principal.getName());
+        }
         return "addpost";
     }
 
@@ -117,16 +120,17 @@ public class GeneralController {
     @GetMapping("/allusers")
     public String renderAllUsers(Principal principal, Model model) {
         if (principal != null) {
+            model.addAttribute("yourName", principal.getName());
             List<ApplicationUser> users = applicationUserRepository.findAll();
             model.addAttribute("users", users);
         }
-        return "allusers";
+        return "allUsers";
     }
 
     @GetMapping("user/{id}")
     public String renderOneUserDetail(@PathVariable int id, Principal principal, Model model) {
         if (principal != null) {
-            System.out.println("salah");
+            model.addAttribute("yourName", principal.getName());
             ApplicationUser wantedUser = applicationUserRepository.findById(id).get();
             model.addAttribute("wanteduser", wantedUser);
         }
@@ -134,13 +138,22 @@ public class GeneralController {
     }
 
     @PostMapping("/follow")
-    public RedirectView follow(Principal principal, int followUser) {
-
+    public RedirectView follow(Principal principal, int follow) {
+        System.out.println(follow);
         ApplicationUser follower = applicationUserRepository.findByUsername(principal.getName());
-        ApplicationUser writer = applicationUserRepository.getOne(followUser);
-        follower.setFollower((Set<ApplicationUser>) writer);
+        ApplicationUser writer = applicationUserRepository.getOne(follow);
+        follower.follow(writer);
         applicationUserRepository.save(follower);
-        return new RedirectView("/profile");
+        return new RedirectView("/allusers");
+    }
+
+    @GetMapping("/feeds")
+    public String renderFeeds(Principal principal, Model model) {
+        model.addAttribute("yourName", principal.getName());
+        ApplicationUser me = applicationUserRepository.findByUsername(principal.getName());
+        Set<ApplicationUser> usersIFollow = me.getUsersIFollow();
+        model.addAttribute("IFollow", usersIFollow);
+        return "feeds";
     }
 
 }
